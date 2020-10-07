@@ -1,0 +1,1 @@
+import { BaseUser } from './User';
