@@ -3,7 +3,7 @@
  * @packageDocumentation
  */
 
-import { BaseUser, BaseUserProps } from './User';
+import { BaseUser, BaseUserProps, SexKind } from './User';
 
 /**
  * Параметры конструктора класса Student
@@ -32,7 +32,7 @@ export class Student extends BaseUser {
     /**
      * Ключ таймера на сон
      */
-    private sleepIntervalKey: number | null = null;
+    private sleepIntervalKey: any | null = null;
 
     /**
      * @param props — параметры конструктора класса Student
@@ -43,7 +43,30 @@ export class Student extends BaseUser {
         this.university = props.university;
     }
 
-    sleep(delay: string): void {
-        if (this.sleepIntervalKey !== )
+    /**
+     * Уйти в сон
+     * @param duration продолжительность сна
+     *
+     * если пол студента [[SexKind.male]], реальная продолжительность сна в два раза больше
+     */
+    sleep(duration: number): void {
+        if (this.sleepIntervalKey !== null) {
+            return null;
+        }
+
+        const realSleepDuration = this.sex === SexKind.male ? duration * 2 : duration;
+
+        this.isSleeping = true;
+        this.sleepIntervalKey = setInterval(() => {
+            this.isSleeping = false;
+            this.sleepIntervalKey = null;
+        }, realSleepDuration);
+    }
+
+    /**
+     * Возвращает true, если студент спит
+     */
+    getIsSleeping(): boolean {
+        return this.isSleeping;
     }
 }
